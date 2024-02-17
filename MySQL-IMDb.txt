@@ -1,0 +1,114 @@
+CREATE DATABASE imdb;
+USE imdb;
+
+
+CREATE TABLE title( movieid INT NOT NULL,moviename VARCHAR(50) NOT NULL, PRIMARY KEY(movieid));
+INSERT INTO title VALUES (1,'sooraripotru');
+INSERT INTO title VALUES (2,'Ratchasan');
+INSERT INTO title VALUES (3,'Roja'); ....,
+
+mysql> select * from title;  
++---------+---------------------------+
+| movieid | moviename                 |
++---------+---------------------------+
+|       1 | Sooraripotru              |
+|       2 | Ratchasan                 |
+|       3 | Roja                      |
+|       4 | Iruvar                    |
+|       5 | Papanasam                 |
+|       6 | Kaithi                    |
+|       7 | Michale madana kama rasan |
++---------+---------------------------+
+
+CREATE TABLE movie (movieid INT NOT NULL,movieimg VARCHAR(512) NOT NULL,moviemp4 VARCHAR(512),	FOREIGN KEY (movieid) REFERENCE title (movieid));
+
+INSERT INTO movie VALUES (1,https://m.media-amazon.com/images/M/MV5BOGVjYmM0ZWEtNTFjNi00MWZjLTk3OTItMm
+				FjMDAzZWU1ZDVjXkEyXkFqcGdeQXVyMTI2Mzk1ODg0._V1_SX116_CR0,0,116,172_AL_.jpg,
+				https://imdb-video.media-imdb.com/vi837402905/1434659607842-pgv4ql-1603687197625.mp4?Expires=1679106963
+				&Signature=P6wIFXljdGZNk~tqHicIBIev7rg1FXJQycWpMNBursncQgVBAr4qKLO~TKhEFT5Bmeh4efz
+				ZxVvrksew4HOKLepNT9IJ1IuLEEbMZlxrV76BNWRYhV8P8V9Aeqp~TciHJqSV0C~t4gW4qsMQKYLXY3ooHKBoPfx550HYKGP9P0KhM
+				-9bTOaZ9uIvLQQrkt8ew4rdxUmNXHm3~YfxLBBvFfqHQZqsSKBSWnWhvuWui-9EeS~cPTgeRqTk7aCb5eaQxwyDxwPx3CuqRRpuKC
+				~tXBwaVAEI~INRmefSyZOsyAMcfEIEUhU2r22uzPLl9w2qAd~7lWOEehXr7nXnKatUjA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA );
+...,
+
+CREATE TABLE genres( genreid INT NOT NULL,genrename VARCHAR(50) NOT NULL,movieid INT, PRIMARY KEY(genreid),FOREIGN KEY (movieid) REFERENCES title (movieid);
+INSERT INTO genre VALUES (1,'ACTION');
+INSERT INTO genre VALUES (2,'DRAMA');
+INSERT INTO genre VALUES (3,'COMEDY');
+...,
+
+mysql> SELECT * FROM GENRES;
++---------+-----------+---------+
+| genreid | genrename | movieid |
++---------+-----------+---------+
+|       1 | ACTION    |       6 |
+|       2 | THIRILLER |       5 |
+|       3 | ROMANTIC  |       3 |
+|       4 | COMEDY    |       7 |
+|       5 | SCIFI     |    NULL |
+|       6 | DRAMA     |       4 |
+|       7 | HORROR    |    NULL |
++---------+-----------+---------+
+
+CREATE TABLE reviews( userid INT NOT NULL,review VARCHAR(1024) NOT NULL,movieid INT, PRIMARY KEY(userid),FOREIGN KEY (movieid) REFERENCES title (movieid);
+INSERT INTO reviewsVALUES (1,' This has to be one of the best Tamil movies I've seen. I watched it with English subtitles and was blown away. 
+				On par with Seven as far as serial killer movies go. Highly highly recommend it ');
+INSERT INTO reviews VALUES (2,' First of all I am not even Tamil but I really enjoyed the movie. This movie has got to be one of the best comedies ever.');
+INSERT INTO reviews VALUES (3,' A must watching pure lit movie');
+...,
+ 
+mysql> describe reviews;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| userid  | int           | YES  | MUL | NULL    |       |
+| review  | varchar(1024) | YES  |     | NULL    |       |
+| movieid | int           | YES  | MUL | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+
+CREATE TABLE users( userid INT NOT NULL,username VARCHAR(50) NOT NULL;
+INSERT INTO users VALUES (1,' Anand');
+INSERT INTO users VALUES (2,'Arun');
+INSERT INTO users VALUES (3,'Balaji');
+...,
+
+mysql> select * from users;
++--------+-----------+
+| userid | username  |
++--------+-----------+
+|      1 | Anand     |
+|      2 | Arun      |
+|      3 | Balaji    |
+|      4 | Balu      |
+|      5 | saravanan |
+|      6 | Govindan  |
++--------+-----------+
+
+CREATE TABLE artist( nameid INT NOT NULL,name VARCHAR(50) NOT NULL,skills VARCHAR(25) NOT NULL,movieid INT, PRIMARY KEY(nameid),FOREIGN KEY (movieid) REFERENCES title (movieid);
+INSERT INTO artis VALUES (1,'suriya');
+INSERT INTO artis VALUES (2,'sudhaKongara');
+INSERT INTO artis VALUES (3,'Mohanlal');
+...,
+
+mysql> select * from artist;
++--------+-----------------------+----------+---------+
+| nameid | name                  | skills   | movieid |
++--------+-----------------------+----------+---------+
+|      1 | suriya                | ACTOR    |       1 |
+|      2 | sudhaKongara          | DIRECTOR |       1 |
+|      3 | Mohanlal              | ACTOR    |       4 |
+|      4 | Prakash Raj           | ACTOR    |       4 |
+|      5 | AishvaryaRai          | ACTOR    |       4 |
+|      6 | ManiRatnam            | DIRECTOR |       4 |
+|      7 | KamalHaasan           | ACTOR    |       7 |
+|      8 | JeethuJoseph          | DIRECTOR |       5 |
+|      9 | Karthi                | ACTOR    |       6 |
+|     10 | LokeshKangaraj        | DIRECTOR |       6 |
+|     11 | SingeetamSrinivasaRao | DIRECTOR |       7 |
+|     12 | CrazyMohan            | WRITER   |       7 |
+|     13 | VishnuVishal          | ACTOR    |       2 |
+|     14 | Ram Kumar             | DIRECTOR |       2 |
+|     15 | AmalaPaul             | ACTOR    |       2 |
++--------+-----------------------+----------+---------+
+
+
